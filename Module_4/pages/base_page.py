@@ -18,6 +18,10 @@ class BasePage:
         login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         login_link.click()
 
+    def go_to_basket_page(self):
+        login_link = self.browser.find_element(*BasePageLocators.BASKET_PAGE)
+        login_link.click()
+
     def is_disappeared(self, how, what, timeout=4):
         try:
             WebDriverWait(self.browser, timeout, 1, TimeoutException). \
@@ -42,6 +46,9 @@ class BasePage:
 
     def open(self):
         self.browser.get(self.url)
+
+    def should_be_cart_button(self):
+        assert self.is_element_present(*BasePageLocators.BASKET_PAGE), "View basket button is not presented"
 
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
