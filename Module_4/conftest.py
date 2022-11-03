@@ -20,7 +20,6 @@ def browser(request, browser_language):
     browser = None
     if browser_name.lower() == "chrome":
         from selenium.webdriver.chrome.options import Options
-        print("\nstart chrome browser for test..")
         options = Options()
         options.add_experimental_option('prefs', {'intl.accept_languages': browser_language})
         print("\nstart chrome browser for test..")
