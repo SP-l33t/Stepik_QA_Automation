@@ -21,3 +21,11 @@ class ProductPage(BasePage):
         product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
         goods_in_cart = self.browser.find_element(*ProductPageLocators.PRICE_OF_GOODS_IN_CART).text
         assert product_price in goods_in_cart, "The price of the goods in cart doesn't match the price of the product"
+
+    def should_be_no_success_message_is_no_element_present(self):
+        assert self.is_not_element_present(*ProductPageLocators.ADDED_TO_CART_MESSAGE), \
+            '"Successfully added to cart" message is present'
+
+    def should_be_no_success_message_is_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.ADDED_TO_CART_MESSAGE),\
+            '"Successfully added to cart" message is still present'
