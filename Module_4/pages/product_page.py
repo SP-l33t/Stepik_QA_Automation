@@ -15,7 +15,7 @@ class ProductPage(BasePage):
     def check_product_name_matches_the_added_to_cart_product(self):
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
         added_to_cart_message = self.browser.find_element(*ProductPageLocators.ADDED_TO_CART_MESSAGE).text
-        assert product_name.lower() in added_to_cart_message.lower(), "The wrong product was added to the cart"
+        assert product_name.lower() == added_to_cart_message.lower(), "The wrong product was added to the cart"
 
     def price_matches_price_of_goods_in_cart(self):
         product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
