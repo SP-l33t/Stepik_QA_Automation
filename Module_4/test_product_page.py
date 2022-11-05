@@ -7,6 +7,8 @@ import random
 import string
 
 
+PRODUCT_LINK = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+
 def random_email(string_length=10):
     letters = string.ascii_lowercase+string.digits
     return (''.join(random.choice(letters) for i in range(string_length))) + "@fakemail.com"
@@ -22,18 +24,16 @@ class TestUserAddToBasketFromProductPage:
 
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, browser):
-        self.link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
         self.passwd = random_pass(random.randint(9, 15))
         self.email = random_email(random.randint(6, 15))
-        self.page = LoginPage(browser, self.link)
+        self.page = LoginPage(browser, PRODUCT_LINK)
         self.page.open()
         self.page.go_to_login_page()
         self.page.register_new_user(self.email, self.passwd)
         self.page.should_be_authorized_user()
 
     def test_user_cant_see_success_message(self, browser):
-        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-        page = ProductPage(browser, link)
+        page = ProductPage(browser, PRODUCT_LINK)
         page.open()
         page.should_be_no_success_message_is_no_element_present()
 
@@ -62,7 +62,6 @@ class TestUserAddToBasketFromProductPage:
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
                                   "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
 def test_guest_can_add_product_to_basket(browser, link):
-    # link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
     page = ProductPage(browser, link)
     page.open()
     page.should_be_add_to_card_button()
@@ -73,23 +72,20 @@ def test_guest_can_add_product_to_basket(browser, link):
 
 
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
-    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-    page = ProductPage(browser, link)
+    page = ProductPage(browser, PRODUCT_LINK)
     page.open()
     page.press_add_to_cart_button()
     page.should_be_no_success_message_is_no_element_present()
 
 
 def test_guest_cant_see_success_message(browser):
-    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-    page = ProductPage(browser, link)
+    page = ProductPage(browser, PRODUCT_LINK)
     page.open()
     page.should_be_no_success_message_is_no_element_present()
 
 
 def test_message_disappeared_after_adding_product_to_basket(browser):
-    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-    page = ProductPage(browser, link)
+    page = ProductPage(browser, PRODUCT_LINK)
     page.open()
     page.press_add_to_cart_button()
     page.should_be_no_success_message_is_disappeared()
