@@ -17,18 +17,19 @@ def random_pass(string_length=10):
     return ''.join(random.choice(letters) for i in range(string_length))
 
 
+@pytest.mark.authorized
 class TestUserAddToBasketFromProductPage:
 
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, browser):
-        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-        passwd = random_pass(random.randint(9, 15))
-        email = random_email(random.randint(6, 15))
-        page = LoginPage(browser, link)
-        page.open()
-        page.go_to_login_page()
-        page.register_new_user(email, passwd)
-        page.should_be_authorized_user()
+        self.link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        self.passwd = random_pass(random.randint(9, 15))
+        self.email = random_email(random.randint(6, 15))
+        self.page = LoginPage(browser, self.link)
+        self.page.open()
+        self.page.go_to_login_page()
+        self.page.register_new_user(self.email, self.passwd)
+        self.page.should_be_authorized_user()
 
     def test_user_cant_see_success_message(self, browser):
         link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
